@@ -29,9 +29,12 @@ function petland({
   chrome.tabs.onUpdated.addListener(function (tabID, changeInfo, tab) {
     // make sure the status is 'complete' and it's the right tab
     console.log('petland');
-    console.log(changeInfo.status);
-    if (changeInfo.status == 'complete') {
-      console.log('petland');
+    console.log('tab', tab);
+    console.log('tabId', tabID);
+    if (
+      changeInfo.status == 'complete' &&
+      tab.url === 'https://d.comenity.net/petland/public/apply/ApplyIntro.xhtml'
+    ) {
       chrome.tabs.executeScript(null, {
         code: `
         console.log('petland')
@@ -76,20 +79,57 @@ function lending({
   chrome.tabs.onUpdated.addListener(function (tabID, changeInfo, tab) {
     // make sure the status is 'complete' and it's the right tab
 
-    if (changeInfo.status == 'complete') {
+    if (
+      changeInfo.status == 'complete' &&
+      tab.url ===
+        'https://portal.lendingusa.com/applications/dtm/application?iframe=2&pid=18693&aid=19618'
+    ) {
       chrome.tabs.executeScript(null, {
         code: `
-        console.log('lending')
-        document.querySelector('input[name="applicant.firstName"]').value = '${fname}'
-        document.querySelector('input[name="applicant.lastName"]').value = '${lname}'
-        document.querySelector('input[name="applicant.addresses.address"]').value ='${staddre}'
-        document.querySelector('input[name="applicant.addresses.city"]').value = '${city}'
-        document.querySelector('input[name="applicant.addresses.state"]').value = '${state}'
-        document.querySelector('input[name="applicant.addresses.zipcode"]').value = '${zip}'
-        document.querySelector('input[name="applicant.dateOfBirth"]').value ='${dob}'
-        document.querySelector('input[name="applicant.ssn"]').value =  '${social}'
-        document.querySelector('input[name="applicant.email"]').value = '${email}'
-        document.querySelector('input[name="applicant.phoneNumbers.Number"]').value = '${phone}'`,
+        setTimeout(function(){
+          const data = [
+           {value: '${fname}', selector: document.querySelector('input[name="applicant.firstName"]')},
+           {value: '${lname}', selector: document.querySelector('input[name="applicant.lastName"]')},
+           {value: '${social}', selector: document.querySelector('input[name="applicant.ssn"]')},
+           {value: '${dob}', selector: document.querySelector('input[name="applicant.dateOfBirth"]')},
+           {value: '${income}', selector: document.querySelector('input[name="financials.stated.grossMonthlyIncome"]')},
+           {value: '${zip}', selector: document.querySelector('input[name="applicant.addresses.zipcode"]')},
+           {value: '${staddre} ${apt}', selector: document.querySelector('input[name="applicant.addresses.address"]')},
+           {value: '${city}', selector: document.querySelector('input[name="applicant.addresses.city"]')},
+           {value: '${email}', selector: document.querySelector('input[name="applicant.email"]')},
+           {value: '${phone}', selector: document.querySelector('input[name="applicant.phoneNumbers.Number"]')},
+           {value: '${state}', selector: document.querySelector('input[name="applicant.addresses.state"]')},
+
+          ]
+
+        function setNativeValue(element, value) {
+          const { set: valueSetter } = Object.getOwnPropertyDescriptor(element, 'value') || {}
+          const prototype = Object.getPrototypeOf(element)
+          const { set: prototypeValueSetter } = Object.getOwnPropertyDescriptor(prototype, 'value') || {}
+    
+          if (prototypeValueSetter && valueSetter !== prototypeValueSetter) {
+            prototypeValueSetter.call(element, value)
+          } else if (valueSetter) {
+            valueSetter.call(element, value)
+          } else {
+            throw new Error('The given element does not have a value setter')
+          }
+        }
+
+        data.forEach(function(field){
+          setNativeValue(field.selector, field.value)
+          field.selector.dispatchEvent(new Event('input', { bubbles: true }))
+        })
+        
+        /*setNativeValue(selectors[0], '${lname}')
+        selectors[0].dispatchEvent(new Event('input', { bubbles: true }));
+     
+        setNativeValue(selectors[1], '${fname}')
+        selectors[1].dispatchEvent(new Event('input', { bubbles: true }));*/
+
+        },3000)
+        
+        `,
       });
     }
   });
