@@ -15,6 +15,8 @@ function App() {
       state: 'FL',
       income: '55000',
       email: 'test@gmail.com',
+      phone: '3052221111',
+      altPhone: '3057774444',
     },
   });
 
@@ -144,12 +146,63 @@ function App() {
 
             <div className='flex flex-col flex-1 mb-5'>
               <label className='text-lg'>State</label>
-              <input
+              <select
                 className='border border-1 py-4 rounded-lg pl-4'
-                type='text'
                 name='state'
                 ref={register}
-              />
+              >
+                <option value='AL'>Alabama</option>
+                <option value='AK'>Alaska</option>
+                <option value='AZ'>Arizona</option>
+                <option value='AR'>Arkansas</option>
+                <option value='CA'>California</option>
+                <option value='CO'>Colorado</option>
+                <option value='CT'>Connecticut</option>
+                <option value='DE'>Delaware</option>
+                <option value='DC'>District Of Columbia</option>
+                <option value='FL'>Florida</option>
+                <option value='GA'>Georgia</option>
+                <option value='HI'>Hawaii</option>
+                <option value='ID'>Idaho</option>
+                <option value='IL'>Illinois</option>
+                <option value='IN'>Indiana</option>
+                <option value='IA'>Iowa</option>
+                <option value='KS'>Kansas</option>
+                <option value='KY'>Kentucky</option>
+                <option value='LA'>Louisiana</option>
+                <option value='ME'>Maine</option>
+                <option value='MD'>Maryland</option>
+                <option value='MA'>Massachusetts</option>
+                <option value='MI'>Michigan</option>
+                <option value='MN'>Minnesota</option>
+                <option value='MS'>Mississippi</option>
+                <option value='MO'>Missouri</option>
+                <option value='MT'>Montana</option>
+                <option value='NE'>Nebraska</option>
+                <option value='NV'>Nevada</option>
+                <option value='NH'>New Hampshire</option>
+                <option value='NJ'>New Jersey</option>
+                <option value='NM'>New Mexico</option>
+                <option value='NY'>New York</option>
+                <option value='NC'>North Carolina</option>
+                <option value='ND'>North Dakota</option>
+                <option value='OH'>Ohio</option>
+                <option value='OK'>Oklahoma</option>
+                <option value='OR'>Oregon</option>
+                <option value='PA'>Pennsylvania</option>
+                <option value='RI'>Rhode Island</option>
+                <option value='SC'>South Carolina</option>
+                <option value='SD'>South Dakota</option>
+                <option value='TN'>Tennessee</option>
+                <option value='TX'>Texas</option>
+                <option value='UT'>Utah</option>
+                <option value='VT'>Vermont</option>
+                <option value='VA'>Virginia</option>
+                <option value='WA'>Washington</option>
+                <option value='WV'>West Virginia</option>
+                <option value='WI'>Wisconsin</option>
+                <option value='WY'>Wyoming</option>
+              </select>
             </div>
 
             <div className='flex flex-col flex-1 mb-5'>
@@ -161,6 +214,38 @@ function App() {
                 ref={register}
               />
             </div>
+          </div>
+
+          <div className='flex justify-evenly space-x-4'>
+            <div className='flex flex-col flex-1 mb-5'>
+              <label className='text-lg mr-4'>Phone</label>
+              <input
+                className='border border-1 py-4 rounded-lg pl-4'
+                type='text'
+                name='phone'
+                ref={register}
+              />
+            </div>
+
+            <div className='flex flex-col flex-1 mb-5'>
+              <label className='text-lg mr-4'>Alt Phone</label>
+              <input
+                className='border border-1 py-4 rounded-lg pl-4'
+                type='text'
+                name='altPhone'
+                ref={register}
+              />
+            </div>
+
+            {/* <div className='flex flex-col flex-1 mb-5'>
+              <label className='text-lg'>Last Name</label>
+              <input
+                className='border border-1 py-4 rounded-lg pl-4'
+                type='text'
+                name='lname'
+                ref={register}
+              />
+            </div> */}
           </div>
 
           <button

@@ -22,6 +22,7 @@ function petland({
   state,
   email,
   phone,
+  altPhone,
 }) {
   var newURL = 'https://d.comenity.net/petland/public/apply/ApplyIntro.xhtml';
   chrome.tabs.create({ url: newURL });
@@ -42,7 +43,7 @@ function petland({
           document.querySelector('#inpName_middleInitial_input').value = '${mi}'
           document.querySelector('#inpName_lastName_input').value = '${lname}'
           document.querySelector('#inpssn').value = '${social}'
-          document.querySelector('#inpDob_field').currentValue = '${dob}'
+          document.querySelector('#inpDob_input').value = '${dob}'
           document.querySelector('#annualIncome_input').value = '${income}'
           document.querySelector('#inpAddress_usZipInstantCredit_input').value ='${zip}'
           document.querySelector('#inpAddress_streetAddress_input').value ='${staddre}'
@@ -51,7 +52,8 @@ function petland({
           document.querySelector('#inpAddress_usStateLabel_input').value = '${state}'
           document.querySelector('#email_input').value = '${email}'
           document.querySelector('#confirmEmail_input').value = '${email}'
-          document.querySelector('#inpMobilePhone_fullPhoneNumber').value ='3054141122'`,
+          document.querySelector('#inpMobilePhone_fullPhoneNumber').value =${phone},
+          document.querySelector('#inpAltPhone_fullPhoneNumber').value =${altPhone}`,
       });
     }
   });
@@ -97,8 +99,8 @@ function lending({
            {value: '${staddre} ${apt}', selector: document.querySelector('input[name="applicant.addresses.address"]')},
            {value: '${city}', selector: document.querySelector('input[name="applicant.addresses.city"]')},
            {value: '${email}', selector: document.querySelector('input[name="applicant.email"]')},
-           {value: '${phone}', selector: document.querySelector('input[name="applicant.phoneNumbers.Number"]')},
-           {value: '${state}', selector: document.querySelector('input[name="applicant.addresses.state"]')},
+           {value: 'numberToPhone(${phone})', selector: document.querySelector('input[name="applicant.phoneNumbers.Number"]')},
+           {value: '${state}', selector: document.querySelector('div.container-body > form > div > div:nth-child(2) > div.col-lg-8 > div:nth-child(2) > div > div:nth-child(7) > div:nth-child(1) > div.col-sm-7 > div > label > select')},
 
           ]
 
@@ -128,6 +130,14 @@ function lending({
         selectors[1].dispatchEvent(new Event('input', { bubbles: true }));*/
 
         },3000)
+
+        function numberToPhone( number ) {
+          if( number ) {
+            return number.replace( /\D+/g, "" ).replace( /([0-9]{1,3})([0-9]{3})([0-9]{4}$)/gi, "($1)$2-$3" ); //mask numbers (xxx) xxx-xxxx
+          } else {
+            return "";
+          }
+        };
         
         `,
       });
